@@ -1,14 +1,46 @@
 ﻿// Each #kernel tells which function to compile; you can have many kernels
-#pragma kernel CSMain
+#pragma kernel CSParticle
 
 // Create a RenderTexture with enableRandomWrite flag and set it
 // with cs.SetTexture
 RWTexture2D<float4> Result;
 
-[numthreads(8,8,1)]
-void CSMain (uint3 id : SV_DispatchThreadID)
-{
-    // TODO: insert actual code here!
+float deltaTime;
+float3 InitialPush;
+float3 InitialPos;
 
-    Result[id.xy] = float4(id.x & id.y, (id.x & 15)/15.0, (id.y & 15)/15.0, 0.0);
+struct Particle
+{
+    float3 position;        //Actual position
+    float3 velocity;        //Actual velocity
+    float3 acceleration;    //Force applied 
+
+    float lifespan;         //Duration of particle
+
+};
+RWStructuredBuffer<Particle> particleBuffer;
+
+
+
+[numthreads(8,8,1)]
+void CSParticle (uint3 id : SV_DispatchThreadID)
+{
+    if(particleBuffer[id.x].lifespan <= 0)
+    {
+        particleBuffer[id.x].lifespan = 5;
+        particleBuffer[id.x].position = InitialPos;
+        particleBuffer[id.x].velocity = InitialPush;
+        particleBuffer[id.x].acceleration = float3(0, -9, 0);
+    }
+   
+    // Substract with deltaTime
+    particleBuffer[id.x].lifespan -= deltaTime;
+
+    //Process Movement
+    particleBuffer[id.x].position += particleBuffer[id.x].velocity     * deltaTime;
+    particleBuffer[id.x].velocity += particleBuffer[id.x].acceleration * deltaTime;
+
+
+
+    //Result[id.xy] = float4(id.x & id.y, (id.x & 15)/15.0, (id.y & 15)/15.0, 0.0);
 }

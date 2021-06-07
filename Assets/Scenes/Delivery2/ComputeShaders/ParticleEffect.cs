@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class ParticleEffect : MonoBehaviour
 {
-    // Start is called before the first frame update
-    private int particlecount = 100000;
+    private int pcount = 100000;
 
     public Material material;
     public Vector3 InitPos;
@@ -20,25 +19,25 @@ public class ParticleEffect : MonoBehaviour
     private int WarpCount;
     struct Particle
     {
-        public Vector3 position;        //Actual position
-        public Vector3 velocity;        //Actual velocity
-        public Vector3 acceleration;    //Force applied 
+        public Vector3 position;        //Curr pos
+        public Vector3 velocity;        //Curr vel
+        public Vector3 acceleration;    //Gravity
 
-        public float lifespan;         //Duration of particle
+        public float lifespan;
 
     };
 
 
     public ComputeShader computeShader;
-    ComputeBuffer particleBuffer;
+    ComputeBuffer particles;
 
     void Start()
     {
-        Particle[] particleArray = new Particle[particlecount];
+        Particle[] particleArray = new Particle[pcount];
 
-        WarpCount = Mathf.CeilToInt((float)particlecount / WARP_SIZE);
+        WarpCount = Mathf.CeilToInt((float)pcount / WARP_SIZE);
 
-        for (int i = 0; i < particlecount; i++)
+        for (int i = 0; i < pcount; i++)
         {
             particleArray[i].position = new Vector3(0, -500, 0);
             particleArray[i].velocity = new Vector3(0, 0, 0);
@@ -48,25 +47,25 @@ public class ParticleEffect : MonoBehaviour
 
         }
 
-        particleBuffer = new ComputeBuffer(particlecount, PARTICLE_SIZE);
-        particleBuffer.SetData(particleArray);
+        particles = new ComputeBuffer(pcount, PARTICLE_SIZE);
+        particles.SetData(particleArray);
 
         ComputeShaderID = computeShader.FindKernel("CSParticle");
 
-        computeShader.SetBuffer(ComputeShaderID, "particleBuffer", particleBuffer);
-        material.SetBuffer("particleBuffer", particleBuffer);
+        computeShader.SetBuffer(ComputeShaderID, "particleBuffer", particles);
+        material.SetBuffer("particleBuffer", particles);
     }
 
     void OnRenderObject()
     {
         material.SetPass(0);
-        Graphics.DrawProceduralNow(MeshTopology.Points, 1, particlecount);
+        Graphics.DrawProceduralNow(MeshTopology.Points, 1, pcount);
     }
 
     void OnDestroy()
     {
-        if (particleBuffer != null)
-            particleBuffer.Release();
+        if (particles != null)
+            particles.Release();
     }
 
     void Update()

@@ -28,7 +28,6 @@
 			float4 color : COLOR;
 			float life : LIFE;
 		};
-		// particles' data
 		StructuredBuffer<Particle> particleBuffer;
 		
 
@@ -36,12 +35,9 @@
 		{
 			PS_INPUT o = (PS_INPUT)0;
 
-			// Color
 			float life = particleBuffer[instance_id].life;
 			float lerpVal = life * 0.25f;
-			o.color = fixed4(1.0f - lerpVal+0.1, lerpVal+0.1, 1.0f, lerpVal);
-
-			// Position
+			o.color = fixed4(1,1,1,1);
 			o.position = UnityObjectToClipPos(float4(particleBuffer[instance_id].position, 1.0f));
 
 			return o;

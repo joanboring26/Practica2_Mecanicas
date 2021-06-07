@@ -7,7 +7,7 @@ public class ParticleEffect : MonoBehaviour
     // Start is called before the first frame update
     public int particlecount = 400;
 
-    private const int PARTICLE_SIZE = 20;
+    private const int PARTICLE_SIZE = 40;
 
     private int ComputeShaderID;
     struct Particle

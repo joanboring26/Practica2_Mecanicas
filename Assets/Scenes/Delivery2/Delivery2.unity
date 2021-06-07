@@ -1025,11 +1025,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 166814878}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80a3397ce9f80934781d6625979256ad, type: 3}
+  m_Script: {fileID: 11500000, guid: 5e79b9df3401e9243bab576a19b389b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  computeShader: {fileID: 7200000, guid: 21c3ddb07f734aa4a8520d81ca60db7d, type: 3}
-  renderTexture: {fileID: 0}
+  material: {fileID: 2100000, guid: 4c39513ce6194fc40bd070a399163a2e, type: 2}
+  computeShader: {fileID: 7200000, guid: 62f1ae948600df6499f4d7a9100df394, type: 3}
 --- !u!4 &190308577 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 400052, guid: 5b97a7a3863937b458829d45785c5890,

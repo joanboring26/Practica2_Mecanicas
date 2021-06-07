@@ -936,7 +936,7 @@ GameObject:
   - component: {fileID: 166814879}
   - component: {fileID: 166814883}
   m_Layer: 0
-  m_Name: Sphere
+  m_Name: ParticleSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1028,7 +1028,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80a3397ce9f80934781d6625979256ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  particlecount: 30000
   material: {fileID: 2100000, guid: 4c39513ce6194fc40bd070a399163a2e, type: 2}
   InitPos: {x: -8.48, y: 3.5, z: 12.24}
   InitLaunch: {x: 0.85, y: 2, z: -0.5}

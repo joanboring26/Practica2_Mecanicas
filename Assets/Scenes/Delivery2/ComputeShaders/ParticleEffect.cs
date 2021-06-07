@@ -5,7 +5,8 @@ using UnityEngine;
 public class ParticleEffect : MonoBehaviour
 {
     // Start is called before the first frame update
-    public int particlecount = 400;
+    private int particlecount = 100000;
+
     public Material material;
     public Vector3 InitPos;
     public Vector3 InitLaunch;
@@ -30,23 +31,17 @@ public class ParticleEffect : MonoBehaviour
 
     public ComputeShader computeShader;
     ComputeBuffer particleBuffer;
-    void Start()
-    {
-        StartComputeShader();
-    }
 
-    // Update is called once per frame
-    
-    void StartComputeShader()
+    void Start()
     {
         Particle[] particleArray = new Particle[particlecount];
 
         WarpCount = Mathf.CeilToInt((float)particlecount / WARP_SIZE);
 
-        for (int i = 0; i < particlecount; i++) 
+        for (int i = 0; i < particlecount; i++)
         {
-            particleArray[i].position = new Vector3(0,0,0);
-            particleArray[i].velocity = new Vector3(0, 10, 0);
+            particleArray[i].position = new Vector3(0, -500, 0);
+            particleArray[i].velocity = new Vector3(0, 0, 0);
             particleArray[i].acceleration = new Vector3(0, -4, 0);
 
             particleArray[i].lifespan = Random.value * 6.0f + 3.0f;

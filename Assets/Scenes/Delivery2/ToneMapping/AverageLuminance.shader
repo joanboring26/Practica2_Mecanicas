@@ -1,10 +1,8 @@
-﻿Shader "Custom/ToneMapping"
+﻿Shader "Unlit/AverageLuminance"
 {
     Properties
     {
-        _MainTex ("Texture", 2D) = "white" {}
-        _Exposure("Exposure", Range(0, 10)) = 0.6
-        _Gamma("Gamma", Range(0, 1)) = 2.2
+        _MainTex ("RenderTex", 2D) = "white" {}
     }
     SubShader
     {
@@ -40,18 +38,10 @@
             }
 
             sampler2D _MainTex;
-            float _Exposure;
-            float _Gamma;
 
             fixed4 frag (v2f i) : SV_Target
             {
-                const float g = _Gamma;
-                float3 sceneColor = tex2D(_MainTex, i.uv).rgb;
-                float3 m = float3(1,1,1) - exp(-sceneColor * _Exposure);
-                float gamCorr = 1.0 / g;
-                m = pow(m, float3(gamCorr,gamCorr,gamCorr));
-            
-                return  float4(m, 1.0);
+                return  float4(tex2D(_MainTex, i.uv).rgb, 1.0);
             }
             ENDCG
         }
